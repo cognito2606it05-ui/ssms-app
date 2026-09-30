@@ -1,0 +1,218 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+}
+
+@layer base {
+  body {
+    @apply bg-stone-50 text-stone-950 dark:bg-stone-950 dark:text-stone-50 overflow-hidden transition-colors duration-300;
+  }
+}
+
+.perspective-1000 {
+  perspective: 2000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.book-shadow {
+  box-shadow:
+    0 30px 60px -15px rgba(15, 23, 42, 0.35),
+    0 18px 30px -12px rgba(15, 23, 42, 0.25),
+    0 2px 4px rgba(15, 23, 42, 0.12);
+}
+
+.book-glow {
+  box-shadow:
+    0 0 40px rgba(59, 130, 246, 0.16),
+    0 0 90px rgba(59, 130, 246, 0.08);
+}
+
+.page-gradient {
+  background: linear-gradient(to right, #ffffff 0%, #f6f6f3 100%);
+}
+
+.dark .page-gradient {
+  background: linear-gradient(to right, #1c1917 0%, #171717 100%);
+}
+
+/* Depth shading along the spine so each turning page reads as paper. */
+.page-shadow-left {
+  box-shadow: inset 14px 0 26px -14px rgba(15, 23, 42, 0.45);
+}
+
+.page-shadow-right {
+  box-shadow: inset -14px 0 26px -14px rgba(15, 23, 42, 0.45);
+}
+
+/* Soft pulsing glow used for the brand mark on the inside cover. */
+@keyframes neonPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.45));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(59, 130, 246, 0.85));
+  }
+}
+
+.animate-neon {
+  animation: neonPulse 2.6s ease-in-out infinite;
+}
+
+/* Animated focus halo for the credential inputs. */
+@keyframes borderBreathe {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+  }
+}
+
+.neon-border-blue:focus {
+  animation: borderBreathe 2.4s ease-in-out infinite;
+}
+
+/* Accent-aware controls — driven by the --accent custom property set on the
+   themed login card, so each role's login container picks up its own colour. */
+.accent-input {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.accent-input:focus {
+  outline: none;
+  border-color: var(--accent, #3b82f6);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, #3b82f6) 18%, transparent);
+}
+
+.accent-link {
+  color: var(--accent, #3b82f6);
+  transition: opacity 0.2s ease;
+}
+
+.accent-link:hover {
+  opacity: 0.75;
+}
+
+/* ============================================================
+   Glass Forest design language
+   Primary #003366 · Secondary #0056B3 · Accent #0EA5E9
+   Glass rgba(255,255,255,0.12) · Forest glow #10B981
+   ============================================================ */
+.gf-bg {
+  background: linear-gradient(135deg, #003366 0%, #0056B3 45%, #0EA5E9 100%);
+  position: relative;
+}
+
+.glass-panel {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.glass-chip {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.glass-input {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.10) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  color: #f8fafc !important;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+.glass-input::placeholder { color: rgba(248, 250, 252, 0.45) !important; }
+.glass-input:focus {
+  outline: none;
+  border-color: rgba(14, 165, 233, 0.75) !important;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25), 0 0 24px rgba(16, 185, 129, 0.15);
+  background: rgba(255, 255, 255, 0.16) !important;
+}
+
+/* soft forest-glow orb used in backgrounds */
+@keyframes gfFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(0, -22px, 0) scale(1.06); }
+}
+.gf-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  pointer-events: none;
+  animation: gfFloat 9s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes gfslide { from { width: 0; } to { width: 100%; } }
+
+/* GPU-hinted, silky page turns */
+.preserve-3d > * { will-change: transform; }
+.page-leaf {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Refined paper for the open book */
+.page-gradient {
+  background:
+    linear-gradient(105deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0) 30%),
+    linear-gradient(to right, #ffffff 0%, #f3f6fa 100%);
+}
+.dark .page-gradient {
+  background:
+    linear-gradient(105deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 30%),
+    linear-gradient(to right, #0f172a 0%, #0b1220 100%);
+}
+
+/* Deeper, cooler book presence + emerald under-glow on the glass stage */
+.book-shadow {
+  box-shadow:
+    0 40px 80px -20px rgba(0, 24, 51, 0.55),
+    0 18px 36px -14px rgba(0, 24, 51, 0.4),
+    0 2px 6px rgba(0, 24, 51, 0.25);
+}
+.book-glow {
+  box-shadow:
+    0 0 60px rgba(14, 165, 233, 0.22),
+    0 0 120px rgba(16, 185, 129, 0.12);
+}
+
+/* Responsive book stage: scale the fixed 1000x700 book down gracefully */
+.book-stage { transform-origin: center center; }
+@media (max-width: 1100px) { .book-stage { transform: scale(0.82); } }
+@media (max-width: 900px)  { .book-stage { transform: scale(0.66); } }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-stone-200 dark:bg-stone-800 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-stone-300 dark:bg-stone-700;
+}
+
+

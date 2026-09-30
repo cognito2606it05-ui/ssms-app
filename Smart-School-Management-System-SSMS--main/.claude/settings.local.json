@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls node_modules/.bin/vite)",
+      "Bash(npm -v)",
+      "Bash(npm run *)"
+    ]
+  }
+}
